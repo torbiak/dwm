@@ -444,6 +444,7 @@ buttonpress(XEvent *e)
 			click = ClkWinTitle;
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
+		arrange(c->mon);
 		click = ClkClientWin;
 	}
 	for (i = 0; i < LENGTH(buttons); i++)
