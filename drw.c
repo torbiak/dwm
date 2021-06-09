@@ -30,6 +30,10 @@ utf8validate(long *u, size_t i)
 {
 	if (!BETWEEN(*u, utfmin[i], utfmax[i]) || BETWEEN(*u, 0xD800, 0xDFFF))
 		*u = UTF_INVALID;
+	// Don't try displaying multibyte characters, as a workaround for
+	// https://wiki.archlinux.org/title/Dwm#Crashes_due_to_Emojis_in_some_fonts
+	if (*u > 0x7F)
+	    *u = UTF_INVALID;
 	for (i = 1; *u > utfmax[i]; ++i)
 		;
 	return i;
