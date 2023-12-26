@@ -1,10 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
+#define FONT "monospace:size=13"
 static const char *fonts[] = {
-	"terminus:size=10"
+	FONT
 };
-static const char dmenufont[]       = "terminus:size=10";
+static const char dmenufont[]       = FONT;
 static const char normbordercolor[] = "#003355";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
