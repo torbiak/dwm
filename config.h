@@ -1,21 +1,26 @@
 /* See LICENSE file for copyright and license details. */
 
-/* appearance */
 #define FONT "monospace:size=13"
-static const char *fonts[] = {
-	FONT
-};
-static const char dmenufont[]       = FONT;
-static const char normbordercolor[] = "#003355";
-static const char normbgcolor[]     = "#222222";
-static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#007799";
-static const char selbgcolor[]      = "#005577";
-static const char selfgcolor[]      = "#eeeeee";
+
+/* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const char *fonts[] = { FONT };
+static const char dmenufont[] = FONT;
+static const char col_dark_blue[] = "#003355";  // dark blue
+static const char col_dark_grey[] = "#222222";  // dark grey
+static const char col_light_grey[] = "#bbbbbb";  // light grey
+static const char col_light_blue[] = "#007799";  // light blue
+static const char col_lighter_blue[] = "#005577";  // slightly lighter blue
+static const char col_almost_white[] = "#eeeeee";  // almost white
+
+static const char *colors[][3]      = {
+	/*               fg                bg                border   */
+	[SchemeNorm] = { col_light_grey,   col_dark_grey,    col_dark_blue  },
+	[SchemeSel]  = { col_almost_white, col_lighter_blue, col_light_blue },
+};
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -34,6 +39,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -55,11 +61,10 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_dark_grey, "-nf", col_light_grey, "-sb", col_lighter_blue, "-sf", col_almost_white, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *pri2clip[]  = { "sh", "-c", "xclip -o -selection primary | xclip -selection clipboard", NULL };
-
-static Key keys[] = {
+static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
@@ -98,8 +103,8 @@ static Key keys[] = {
 };
 
 /* button definitions */
-/* click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-static Button buttons[] = {
+/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
