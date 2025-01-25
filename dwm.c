@@ -232,6 +232,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void borderwidth(const Arg *arg);
 
 /* variables */
 static const char broken[] = "broken";
@@ -2141,6 +2142,18 @@ zoom(const Arg *arg)
 	if (c == nexttiled(selmon->clients) && !(c = nexttiled(c->next)))
 		return;
 	pop(c);
+}
+
+void
+borderwidth(const Arg *arg)
+{
+	Client *c = selmon->sel;
+	c->bw += arg->i;
+	if (c->bw < 0) {
+		c->bw = 0;
+	}
+	resizeclient(c, c->x, c->y, c->w, c->h);
+	arrange(selmon);
 }
 
 int

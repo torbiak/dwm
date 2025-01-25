@@ -66,6 +66,8 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *pri2clip[]  = { "sh", "-c", "xclip -o -selection primary | xclip -selection clipboard", NULL };
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY,                       XK_o,      borderwidth,    {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_o,      borderwidth,    {.i = -1 } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = pri2clip } },
